@@ -1,0 +1,27 @@
+{
+  "name": "discord-recruitment-bot",
+  "version": "1.0.0",
+  "description": "複数サーバー対応のDiscord募集・日程調整Bot",
+  "type": "module",
+  "main": "index.js",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "deploy": "node deploy-commands.js",
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage"
+  },
+  "keywords": [
+    "discord",
+    "discord-bot",
+    "recruitment",
+    "scheduling"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "14.27.0",
+    "dotenv": "^16.4.5"
+  }
+}

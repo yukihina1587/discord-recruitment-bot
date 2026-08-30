@@ -1,0 +1,10 @@
+services:
+  discord-recruitment-bot:
+    environment:
+      IGDB_CLIENT_SECRET_FILE: /run/secrets/igdb_client_secret
+    secrets:
+      - igdb_client_secret
+
+secrets:
+  igdb_client_secret:
+    file: ./secrets/igdb_client_secret

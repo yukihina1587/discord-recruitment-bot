@@ -1,0 +1,52 @@
+services:
+  discord-recruitment-bot:
+    build: .
+    image: discord-recruitment-bot:local
+    restart: unless-stopped
+    init: true
+    read_only: true
+    user: "1000:1000"
+    env_file:
+      - path: ./settings.env
+        required: false
+    environment:
+      DATA_DIR: /app/data
+      DISCORD_TOKEN_FILE: /run/secrets/discord_token
+      HEALTHCHECK_FILE: /tmp/discord-bot-ready
+      TZ: Asia/Tokyo
+    secrets:
+      - discord_token
+    volumes:
+      - discord-bot-data:/app/data
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=16m,mode=0700,uid=1000,gid=1000
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 64
+    mem_limit: 256m
+    cpus: 0.5
+    healthcheck:
+      test: ["CMD", "node", "healthcheck.js"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: local
+      options:
+        max-size: 10m
+        max-file: "3"
+    networks:
+      - discord-egress
+
+secrets:
+  discord_token:
+    file: ./secrets/discord_token
+
+networks:
+  discord-egress:
+
+volumes:
+  discord-bot-data:
